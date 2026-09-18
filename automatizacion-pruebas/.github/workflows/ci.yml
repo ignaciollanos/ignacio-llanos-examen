@@ -1,6 +1,5 @@
 name: CI - Build y Pruebas Automatizadas
 
-# Se ejecuta cuando se hace push o pull request a main o develop
 on:
   push:
     branches: [ main, develop ]
@@ -13,11 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Descargar el código del repositorio
       - name: Checkout del código
         uses: actions/checkout@v4
 
-      # 2. Configurar Java 17
       - name: Configurar JDK 17
         uses: actions/setup-java@v4
         with:
@@ -25,14 +22,11 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      # 3. Stage de Build
       - name: Build del proyecto
         run: mvn -B clean compile
 
-      # 4. Stage de Pruebas Unitarias
       - name: Ejecutar Pruebas Unitarias
         run: mvn -B test -Dtest=CalculadoraTest
 
-      # 5. Stage de Pruebas de Integración
       - name: Ejecutar Pruebas de Integración
         run: mvn -B test -Dtest=GoogleSearchIT
